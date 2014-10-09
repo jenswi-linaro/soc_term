@@ -245,8 +245,10 @@ static void serve_fd(int fd)
 
 		if (pfds[1].revents & POLLIN) {
 			n = read(fd, buf, sizeof(buf));
-			if (n == -1)
-				err(1, "read fd");
+			if (n == -1) {
+				warn("read fd");
+				break;
+			}
 			if (n == 0) {
 				warnx("read fd EOF");
 				break;
